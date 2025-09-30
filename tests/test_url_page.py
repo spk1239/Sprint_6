@@ -1,8 +1,7 @@
 from pages.main_page import MainPage
 from pages.order_page import OrderPage
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import allure
+from data import Data
 
 class TestUrlPage():
 
@@ -14,15 +13,13 @@ class TestUrlPage():
 
         main_page.click_yandex_logo()
 
-        WebDriverWait(driver, 10)
+        main_page.wait()
         
-        windows = driver.window_handles
-        
-        driver.switch_to.window(windows[-1])
+        main_page.switch_window()
   
-        WebDriverWait(driver, 10).until(EC.url_contains('dzen'))
+        main_page.wait_url(Data.YANDEX_DZEN_URL)
 
-        assert 'dzen' in driver.current_url
+        assert main_page.current_url(Data.YANDEX_DZEN_URL)
 
     @allure.title("Проверка перехода на главную страницу")
     @allure.description("На странице заказа жмем на логотип самоката и переходим на главную страницу")
@@ -36,4 +33,4 @@ class TestUrlPage():
         
         order_page.click_scooter_logo()
 
-        assert driver.current_url == 'https://qa-scooter.praktikum-services.ru/'
+        assert order_page.current_url(Data.SCOOTER_URL)

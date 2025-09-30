@@ -1,7 +1,6 @@
 from pages.main_page import MainPage
 import pytest
 from Locators.main_page_locators import MainPageLocators
-import pytest
 import allure
 
 class TestMainPage():
@@ -30,7 +29,7 @@ class TestMainPage():
         
         main_page.wait_element(view)
         
-        assert driver.find_element(*view).is_displayed()
+        assert main_page.element_is_displayed(view)
 
 
         

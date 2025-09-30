@@ -1,7 +1,5 @@
 from pages.main_page import MainPage
 from pages.order_page import OrderPage
-from Locators.order_page_locators import OrderPageLocators
-from Locators.main_page_locators import MainPageLocators
 from data import Data
 import allure
 
@@ -19,10 +17,8 @@ class TestOrderPage():
         main_page.click_on_header_order_button()
         
         order_page.order_scooter(Data.User_1)
-        
-        element = driver.find_element(*OrderPageLocators.ORDER_HEADER)
 
-        assert element.is_displayed()
+        assert order_page.order_header_is_displayed()
         
     
 
@@ -34,17 +30,15 @@ class TestOrderPage():
 
         order_page = OrderPage(driver)
 
-        main_page.scroll_to_the_element(MainPageLocators.BUTTON_LOWER_ORDER)
+        main_page.scroll_to_the_lower_button_order()
 
-        main_page.wait_element(MainPageLocators.BUTTON_LOWER_ORDER)
+        main_page.wait_lower_button_order()
 
         main_page.click_on_lower_order_button()
         
         order_page.order_scooter(Data.User_2)
         
-        element = driver.find_element(*OrderPageLocators.ORDER_HEADER)
-        
-        assert element.is_displayed()
+        assert order_page.order_header_is_displayed()
 
 
 

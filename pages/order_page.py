@@ -12,38 +12,45 @@ class OrderPage(BasePage):
     @allure.step("Заполняем форму заказа")
     def order_scooter(self, user):
 
-        self.driver.find_element(*OrderPageLocators.NAME_FIELD).send_keys(user["Name"])
+        self.send_keys(OrderPageLocators.NAME_FIELD, user["Name"])
 
-        self.driver.find_element(*OrderPageLocators.SURNAME_FIELD).send_keys(user["Surname"])
+        self.send_keys(OrderPageLocators.SURNAME_FIELD, user["Surname"])
 
-        self.driver.find_element(*OrderPageLocators.ADRESS_FIELD).send_keys(user["Adress"])
+        self.send_keys(OrderPageLocators.ADRESS_FIELD, user["Adress"])
 
-        self.driver.find_element(*OrderPageLocators.METRO_FIELD).click()
+        self.click_to_element(OrderPageLocators.METRO_FIELD)
 
-        self.driver.find_element(*OrderPageLocators.METRO_BULVAR).click()
+        self.click_to_element(OrderPageLocators.METRO_BULVAR)
 
-        self.driver.find_element(*OrderPageLocators.PHONE_FIELD).send_keys(user["Number"])
+        self.send_keys(OrderPageLocators.PHONE_FIELD, user["Number"])
 
-        self.driver.find_element(*OrderPageLocators.BUTTON_NEXT).click()
+        self.click_to_element(OrderPageLocators.BUTTON_NEXT)
 
-        self.driver.find_element(*OrderPageLocators.DATE_FIELD).send_keys(user["Date"])
+        self.send_keys(OrderPageLocators.DATE_FIELD, user["Date"])
 
         self.wait_element(OrderPageLocators.RENTAL_PERIOD_FIELD)
 
-        self.driver.find_element(*OrderPageLocators.RENTAL_PERIOD_FIELD).click()
+        self.click_to_element(OrderPageLocators.RENTAL_PERIOD_FIELD)
 
         self.wait_element(OrderPageLocators.BUTTON_DAY_OPTION)
 
-        self.driver.find_element(*OrderPageLocators.BUTTON_DAY_OPTION).click()
+        self.click_to_element(OrderPageLocators.BUTTON_DAY_OPTION)
 
-        self.driver.find_element(*OrderPageLocators.BUTTON_ORDER).click()
+        self.click_to_element(OrderPageLocators.BUTTON_ORDER)
 
-        self.driver.find_element(*OrderPageLocators.BUTTON_YES).click()
+        self.click_to_element(OrderPageLocators.BUTTON_YES)
 
     @allure.step("Жмем на логотип самоката")
     def click_scooter_logo(self):
 
-        self.driver.find_element(*BaseLocators.SCOOTER_LOGO).click()
+        self.click_to_element(BaseLocators.SCOOTER_LOGO)
+
+    @allure.step('Проверяем что появилось окно об успешном заказе')
+    def order_header_is_displayed(self):
+
+        return self.element_is_displayed(OrderPageLocators.ORDER_HEADER)
+    
+    
 
         
 
