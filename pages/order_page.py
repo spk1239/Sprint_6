@@ -1,22 +1,60 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
+from Locators.order_page_locators import OrderPageLocators
+from pages.base_page import BasePage
+from Locators.base_locators import BaseLocators
+import allure
 
-
-class OrderPage():
-    name_field = [By.XPATH, "//input[@placeholder='* Имя']"]
-    surname_field = [By.XPATH, "//input[@placeholder='* Фамилия']"]
-    adress_field = [By.XPATH, "//input[@placeholder='* Адрес: куда привезти заказ']"]
-    metro_field = [By.XPATH, "//input[@placeholder='* Станция метро']"]
-    phone_field = [By.XPATH, "//input[@placeholder='* Телефон: на него позвонит курьер']"]
-    button_next = [By.XPATH, "//button[text()='Далее']"]
-    date_field = [By.XPATH, "//input[@placeholder='* Когда привезти самокат']"]
-    rental_period_field = [By.XPATH, "//div[text()='* Срок аренды']"]
-    button_day_option = [By.XPATH, "//div[text()='сутки']"]
-    button_order = [By.XPATH, "//button[@class='Button_Button__ra12g Button_Middle__1CSJM']"]
-    button_yes = [By.XPATH, "//button[text()='Да'"]
-    order_header = [By.CLASS_NAME, 'Order_ModalHeader__3FDaJ']
-
+class OrderPage(BasePage):
+ 
     def __init__(self, driver):
-        self.driver = driver
+
+        super().__init__(driver)
+
+    @allure.step("Заполняем форму заказа")
+    def order_scooter(self, user):
+
+        self.send_keys(OrderPageLocators.NAME_FIELD, user["Name"])
+
+        self.send_keys(OrderPageLocators.SURNAME_FIELD, user["Surname"])
+
+        self.send_keys(OrderPageLocators.ADRESS_FIELD, user["Adress"])
+
+        self.click_to_element(OrderPageLocators.METRO_FIELD)
+
+        self.click_to_element(OrderPageLocators.METRO_BULVAR)
+
+        self.send_keys(OrderPageLocators.PHONE_FIELD, user["Number"])
+
+        self.click_to_element(OrderPageLocators.BUTTON_NEXT)
+
+        self.send_keys(OrderPageLocators.DATE_FIELD, user["Date"])
+
+        self.wait_element(OrderPageLocators.RENTAL_PERIOD_FIELD)
+
+        self.click_to_element(OrderPageLocators.RENTAL_PERIOD_FIELD)
+
+        self.wait_element(OrderPageLocators.BUTTON_DAY_OPTION)
+
+        self.click_to_element(OrderPageLocators.BUTTON_DAY_OPTION)
+
+        self.click_to_element(OrderPageLocators.BUTTON_ORDER)
+
+        self.click_to_element(OrderPageLocators.BUTTON_YES)
+
+    @allure.step("Жмем на логотип самоката")
+    def click_scooter_logo(self):
+
+        self.click_to_element(BaseLocators.SCOOTER_LOGO)
+
+    @allure.step('Проверяем что появилось окно об успешном заказе')
+    def order_header_is_displayed(self):
+
+        return self.element_is_displayed(OrderPageLocators.ORDER_HEADER)
+    
+    
+
+        
+
+
+
+    
+
